@@ -1,6 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { motion } from "framer-motion"
 
 interface WeatherData {
   current: {
@@ -58,7 +59,12 @@ export default function WeatherChart({ data }: WeatherChartProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+    >
       <Card>
         <CardHeader>
           <CardTitle>Temperatura e Umidade (24h)</CardTitle>
@@ -269,6 +275,6 @@ export default function WeatherChart({ data }: WeatherChartProps) {
           </div>
         </CardContent>
       </Card>
-    </div>
+    </motion.div>
   )
 }

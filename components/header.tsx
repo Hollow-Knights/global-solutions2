@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CloudRain, Menu } from "lucide-react"
@@ -5,11 +7,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 export default function Header() {
   return (
-    <header className="border-b bg-white">
+    <header
+      className="border-b bg-white"
+    >
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <CloudRain className="h-6 w-6 text-blue-600" />
-          <span className="font-bold text-xl text-blue-900">ClimaTempo</span>
+          <span className="font-bold text-xl text-blue-900">Weather Dashboard</span>
         </Link>
 
         {/* Desktop Navigation */}

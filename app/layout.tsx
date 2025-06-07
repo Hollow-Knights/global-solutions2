@@ -8,7 +8,7 @@ import Footer from "@/components/footer"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "ClimaTempo - Monitoramento Meteorológico e Alertas",
+  title: "Weather Dashboard - Monitoramento Meteorológico e Alertas",
   description: "Sistema de monitoramento meteorológico e alertas de desastres naturais",
     generator: 'v0.dev'
 }

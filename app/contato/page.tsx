@@ -78,8 +78,8 @@ export default function ContatoPage() {
                     <Mail className="h-5 w-5 text-blue-600 mt-1" />
                     <div>
                       <p className="font-medium">Email</p>
-                      <p className="text-gray-600">contato@climatempo.com.br</p>
-                      <p className="text-gray-600">suporte@climatempo.com.br</p>
+                      <p className="text-gray-600">contato@weatherdashboard.com.br</p>
+                      <p className="text-gray-600">suporte@weatherdashboard.com.br</p>
                     </div>
                   </div>
 

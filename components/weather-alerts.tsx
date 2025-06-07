@@ -1,10 +1,10 @@
 "use client"
 
 import type React from "react"
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { AlertTriangle, AlertCircle, Info, Shield } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
 interface WeatherData {
   current: {
@@ -35,6 +35,25 @@ interface WeatherAlert {
 interface WeatherAlertsProps {
   data: WeatherData
   locationName: string
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.3,
+    },
+  },
+}
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
 }
 
 export default function WeatherAlerts({ data, locationName }: WeatherAlertsProps) {
@@ -216,60 +235,53 @@ export default function WeatherAlerts({ data, locationName }: WeatherAlertsProps
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5" />
-          Sistema de Alertas Meteorológicos
-        </CardTitle>
-        <CardDescription>Monitoramento de condições que podem causar desastres em {locationName}</CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {alerts.map((alert, index) => (
-          <Alert key={index} className={getAlertStyle(alert.level)}>
-            <div className="flex items-start gap-3">
-              {getAlertIcon(alert.level)}
-              <div className="flex-1">
-                <AlertTitle className="text-lg font-bold mb-2">{alert.title}</AlertTitle>
-                <AlertDescription className="mb-3 text-base">{alert.description}</AlertDescription>
-                <div className="space-y-1">
-                  <p className="font-semibold text-sm">Recomendações:</p>
-                  <ul className="text-sm space-y-1">
-                    {alert.recommendations.map((rec, i) => (
-                      <li key={i} className="flex items-start gap-1">
-                        <span className="text-xs mt-1">•</span>
-                        <span>{rec}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </Alert>
-        ))}
-
-        {/* Informações adicionais sobre desastres */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <h4 className="font-semibold text-blue-900 mb-2">ℹ️ Sobre Desastres Meteorológicos</h4>
-          <div className="text-sm text-blue-800 space-y-2">
-            <p>
-              <strong>Enchentes e Alagamentos:</strong> Podem ocorrer com chuvas &gt; 50mm/h. Evite áreas baixas e
-              próximas a rios.
-            </p>
-            <p>
-              <strong>Vendavais:</strong> Ventos &gt; 60km/h podem derrubar árvores. Rajadas &gt; 90km/h são
-              extremamente perigosas.
-            </p>
-            <p>
-              <strong>Deslizamentos:</strong> Chuvas intensas em encostas podem causar deslizamentos. Evite áreas de
-              risco.
-            </p>
-            <p>
-              <strong>Emergência:</strong> Em caso de emergência, ligue 193 (Bombeiros) ou 199 (Defesa Civil).
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.4 }}
+    >
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <AlertTriangle className="w-5 h-5" />
+            Sistema de Alertas Meteorológicos
+          </CardTitle>
+          <CardDescription>Monitoramento de condições que podem causar desastres em {locationName}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <motion.div
+            className="space-y-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {alerts.map((alert, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Alert className={getAlertStyle(alert.level)}>
+                  <div className="flex items-start gap-3">
+                    {getAlertIcon(alert.level)}
+                    <div className="flex-1">
+                      <AlertTitle className="text-lg font-bold mb-2">{alert.title}</AlertTitle>
+                      <AlertDescription className="mb-3 text-base">{alert.description}</AlertDescription>
+                      <div className="space-y-1">
+                        <p className="font-semibold text-sm">Recomendações:</p>
+                        <ul className="text-sm space-y-1">
+                          {alert.recommendations.map((rec, i) => (
+                            <li key={i} className="flex items-start gap-1">
+                              <span className="text-xs mt-1">•</span>
+                              <span>{rec}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </Alert>
+              </motion.div>
+            ))}
+          </motion.div>
+        </CardContent>
+      </Card>
+    </motion.div>
   )
 }
